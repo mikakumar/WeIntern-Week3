@@ -1,6 +1,6 @@
 'use server'
 import { db } from "@/api/firebase-config";
-import { collection } from "firebase/firestore";
+import { addDoc, collection, getDocs} from "firebase/firestore";
 import OpenAI from "openai";
 
 
@@ -24,8 +24,6 @@ export async function handleCompletion(formData: FormData){
     }`;
     // const n_prompt = `write a blog post in ${n} words or fewer about ${blogTopic}`;
     const seo_prompt = `write a long and SEO-friendly blog post about ${blogTopic}`;
-
-    //1000 max tokens
 
     try{
         const short_query = await openapi.chat.completions.create({
@@ -63,8 +61,19 @@ export async function handleCompletion(formData: FormData){
             throw new Error("Error generating blog post")
         }
         const parsedContent = JSON.parse(content);
+        const post = await addDoc(postCollection, {
+           title: parsedContent.title,
+           content: parsedContent.content,
+           metaInfo: parsedContent.metaInfo,
+           keywords: parsedContent.keywords
+        });
 
     } catch(error){
         console.log(`Error: ${error}`);
-    }
+    }  
+}
+
+export async function getPosts(){
+    const data = await getDocs(postCollection);
+    return data;
 }

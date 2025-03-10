@@ -1,26 +1,33 @@
-export default async function postFormat(){
+"use server";
+
+import { getBlogs, handleCompletion } from "@/actions";
+
+
+
+
+export default async function PostDisplay(){
+
+    const username = auth.onAuthStateChanged(async(user)=>{
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()){
+            return(docSnap.data().name)
+        }
+    })
+
+    const blogs = await getBlogs();
     
+
+
     return(
         <>
-        <div className="grid h-screen grid-cols-[.2fr_1fr]">
-            <section className="bg-black text-white">
-                <div className="flex-1">
-                <div className="mt-5">
-                    <h2>Welcome user!</h2   >
-                </div>
-                <div className="blog-signout-wrapper">
-                <button className="blog-signout-button">Sign Out</button>
-                </div>
-                </div>
-            </section>
-            <section className="flex flex-col h-[90%]">
-                <div className="flex-1">
+         <div className="flex-1">
                     <p>New posts</p>
                     </div>
                     <div>
                     <div className=" bg-gray-700 p-10">
                         
-                        <form action="">
+                        <form action={handleCompletion}>
                         <div className="flex gap-5">
                             <textarea name="prompt" id="prompt"
                             placeholder="Create post"
@@ -36,8 +43,6 @@ export default async function postFormat(){
                         
                     </div>
                 </div>
-            </section>
-        </div>
         </>
     )
 }

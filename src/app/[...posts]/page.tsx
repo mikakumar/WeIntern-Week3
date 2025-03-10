@@ -1,20 +1,27 @@
 
-"use client";
+import {db } from "@/api/firebase-config";
+import { collection, getDocs} from "firebase/firestore";
 
-import { useRouter } from "next/navigation";
+import { signOutFunC } from "@/components/auth";
+import { getPosts, handleCompletion } from "@/actions";
 
-import { signOutFunC } from "@/components/auth"
-import { handleCompletion } from "@/actions"
+import { PostContext } from "@/Context";
 
 
-export default function Postpage(){
 
-    const router = useRouter();
+export default async function Post(){
+
+    const postCollection = collection(db, "posts");
+
+    const posts = await getDocs(postCollection);
+    const filteredPosts = posts.docs.map((post)=>({
+        id: post.id,
+        ...post.data()
+    }));
     
 
     const kickOut = () =>{
         signOutFunC();
-        router.push('/signin')
     }
 
     return(
@@ -23,16 +30,22 @@ export default function Postpage(){
             <section className="bg-black text-white">
                 <div className="flex-1">
                 <div className="mt-5">
-                    <h2>Welcome </h2   >
+                    <h2>Posts</h2>
                 </div>
                 <div className="blog-signout-wrapper">
-                <button className="blog-signout-button" onClick={kickOut} >Sign Out</button>
+                <a className="blog-signout-button" href="/signin">Sign Out</a>
                 </div>
                 </div>
             </section>
             <section className="flex flex-col h-[90%]">
                 <div className="flex-1">
-                    <p>New posts</p>
+                    <h2>Posts</h2>
+                    {filteredPosts && 
+                    filteredPosts.map((showPost)=> 
+                    
+                    <h3 className= "p-5">{showPost.title}</h3>
+                )
+                    }
                     </div>
                     <div>
                     <div className=" bg-gray-700 p-10">

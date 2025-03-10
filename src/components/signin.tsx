@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 
+
 import { MdAlternateEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
@@ -29,7 +30,6 @@ const SignIn = () =>{
     const dragIn = () =>{
         signInFunC();
         router.push('/blogs');
-
     }
 
 

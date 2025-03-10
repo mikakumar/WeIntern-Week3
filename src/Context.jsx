@@ -1,35 +1,34 @@
+"use client";
+
 import {createContext, useState, useEffect} from "react";
 
-import {collection, getDoc, getDocs } from "firebase/firestore";
+import {getDoc} from "firebase/firestore";
 
 import { auth, db } from "@/api/firebase-config";
-import {setDoc, doc} from 'firebase/firestore'; 
+import {doc} from 'firebase/firestore'; 
 
-const postContext = createContext();
 
-function contextProvider({children}){
+const PostContext = createContext();
+
+function ContextProvider({children}){
 
      const [username, setUsername] = useState('');
 
-    const fetchUserData = async() =>{
+    useEffect(()=>{
         auth.onAuthStateChanged(async(user)=>{
-            if(user){
-            const docRef = doc(db, "Users", user.uid);
+            const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
             if(docSnap.exists()){
-                
-            }
+                setUsername(docSnap.data().name)
             }
         })
-    }
-
-    useEffect(()=>{
-        fetchUserData()
-    })
+    }, [])
 
    return(
-           <postContext.Provider value={{fetchUserData}}>
+           <PostContext.Provider value={username}>
                {children}
-           </postContext.Provider>
+           </PostContext.Provider>
        )
 }
+
+export {PostContext, ContextProvider};

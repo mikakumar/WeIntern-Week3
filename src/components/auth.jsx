@@ -6,9 +6,10 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 import {setDoc, doc} from 'firebase/firestore'; 
 
 
+
 export const signInFunC = async() =>{
         try{
-            await signInWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, email, password)
             console.log('User logged in successfully!');
         } catch(err){
             console.log(`Error: ${err}`);
@@ -33,7 +34,7 @@ export const githubInFunC = async() =>{
 
    export const registerFunC = async(name, email, password) =>{
             try{
-                await createUserWithEmailAndPassword(auth, email, password);
+                await createUserWithEmailAndPassword(auth, email, password)
                 const user = auth.currentUser;
                 console.log(user);
                 if(user){
