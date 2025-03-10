@@ -1,26 +1,182 @@
+
 @import "tailwindcss";
 
+
+@tailwind base;
+@tailwind components;
+
 :root {
-  --background: #ffffff;
+  --background:rgb(4, 34, 53);
   --foreground: #171717;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base{
+
+  *{
+    @apply m-0 p-0 box-border text-base; 
   }
+
+  body{
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components{
+  .nav-container{
+    @apply bg-black text-white h-[10vh] w-[100%] flex justify-between;
+  }
+  
+  .nav-menu{
+   @apply mr-10 items-center mt-2
+  }
+  
+  .nav-menu ul{
+    @apply flex gap-4;
+  }
+  
+  .nav-menu ul li{
+    @apply bg-white text-black px-3 py-2 relative rounded-md cursor-pointer;
+  }
+
+  
+  
+  .nav-menu ul li:hover{
+    @apply px-3 py-2 relative rounded-md cursor-pointer;
+    background-image: linear-gradient(to right, #09e2f6,#0990f9, #ff4f7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+  }
+
+  .nav-wrapper{
+    @apply rounded-md;
+    background: #042235;
+  }
+
+  .auth-signin-container{
+    @apply bg-black text-white h-[75vh] w-[35vw] ml-[30vw] mt-[10vh] py-10 flex flex-col items-center text-center rounded-lg;
+  }
+
+  .auth-signup-container{
+    @apply bg-black text-white h-[83vh] w-[35vw] ml-[30vw] mt-[5vh] py-10 flex flex-col items-center text-center rounded-lg;
+  }
+
+  .auth-header{
+    @apply text-3xl mb-[3vh];
+    background-image: linear-gradient(to right, #09e2f6,#0990f9, #ff4f7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+  }
+
+  .auth-submit{
+    @apply px-3 py-2 relative rounded-md cursor-pointer;
+    background-image: linear-gradient(to right, #09e2f6,#0990f9, #ff4f7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+  }
+  .auth-submit:hover{
+    @apply absolute px-3 py-2 relative rounded-md cursor-pointer;
+  }
+
+  .other-login-wrapper{
+    @apply inline-block mt-3 mx-4 rounded-md;
+    background: #042235;
+  }
+
+  .other-login-wrapper-git{
+    @apply inline-block mt-3 mr-3 -ml-3 rounded-md;
+    background: #042235;
+  }
+
+  .google-button{
+    @apply w-[13vw] bg-white text-black pl-7 px-4 inset-0 py-2 relative rounded-md cursor-pointer;
+  }
+
+  .google-button:hover{
+    @apply  pl-7 px-4 inset-0 py-2 relative rounded-md cursor-pointer;
+    background-image: linear-gradient(to right, #09e2f6,#0990f9, #ff4f7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+  }
+
+  .button-wrapper{
+    @apply mt-5 inline-block rounded-md bg-white 
+  }
+
+  .button-wrapper:hover{
+    background: #042235;
+  }
+
+  .signin-container{
+    @apply flex flex-row px-10 items-center justify-center 
+  }
+
+  .signup-container{
+    @apply flex flex-row px-10 items-center justify-center;
+  }
+
+  .input-box{
+    @apply w-[25vw] rounded-md p-4 px-12 -ml-[0.5vw] border border-gray-100 text-black placeholder:text-gray-700 inset-0;
+    background-color:rgb(0, 24, 39);
+  }
+
+  .input-box:focus{
+    @apply border-2 border-white bg-white text-black;
+  }
+
+  .input-icon{
+    @apply relative top-10 left-2 text-xl focus:text-black;
+  }
+
+  .password-check{
+    @apply relative left-66 text-xl -top-10;
+  }
+
+  .blog-signout-button{
+    @apply bg-white  text-black px-4 py-2 relative rounded-md cursor-pointer;
+  }
+
+  .blog-signout-button:hover{
+    @apply px-4 py-2 relative rounded-md cursor-pointer;
+    background-image: linear-gradient(to right, #09e2f6,#0990f9, #ff4f7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+  }
+
+  .blog-signout-wrapper{
+    @apply mt-5 inline-block rounded-md bg-white 
+  }
+
+  .blog-signout-wrapper:hover{
+    background: #042235;
+  }
+
+  .prompt-submit-button{
+    @apply bg-white  text-black h-[7vh] w-[9vw] px-4 py-2 relative rounded-md cursor-pointer;
+  }
+
+  .prompt-submit-button:hover{
+    @apply h-[7vh] w-[9vw] px-4 py-2 relative rounded-md cursor-pointer;
+    background-image: linear-gradient(to right, #09e2f6,#0990f9, #ff4f7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+  }
+
+  .prompt-submit-wrapper{
+    @apply h-[7vh] w-[9vw] inline-block rounded-md bg-white 
+  }
+
+  .prompt-submit-wrapper:hover{
+    @apply h-[7vh] w-[9vw] inline-block rounded-md;
+    background: #042235;
+  }
+
 }
+
