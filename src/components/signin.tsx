@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
 
@@ -13,8 +13,11 @@ import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 
 import { signInFunC, googleInFunC, githubInFunC } from "./auth";
+import { PostContext } from "@/Context";
 
 const SignIn = () =>{
+
+    const {toggleLogIn} = useContext(PostContext)
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,7 +32,8 @@ const SignIn = () =>{
    
     const dragIn = () =>{
         signInFunC();
-        router.push('/blogs');
+        router.push('/user');
+        toggleLogIn();  
     }
 
 

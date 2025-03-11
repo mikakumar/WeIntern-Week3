@@ -1,11 +1,12 @@
 
 import {db } from "@/api/firebase-config";
-import { collection, getDocs} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs} from "firebase/firestore";
 
 import { signOutFunC } from "@/components/auth";
 import { getPosts, handleCompletion } from "@/actions";
 
-import { PostContext } from "@/Context";
+
+import Sidebar from '@/components/sidebar';
 
 
 
@@ -14,38 +15,34 @@ export default async function Post(){
     const postCollection = collection(db, "posts");
 
     const posts = await getDocs(postCollection);
-    const filteredPosts = posts.docs.map((post)=>({
-        id: post.id,
-        ...post.data()
-    }));
+    const lastPost = posts.docs[posts.docs.length-1];
+    const postRef = doc(db, 'posts', lastPost.id);
+    const postSnap = await getDoc(postRef);
+    const postData = postSnap.data();
     
-
-    const kickOut = () =>{
-        signOutFunC();
-    }
-
     return(
         <>
         <div className="grid h-screen grid-cols-[.2fr_1fr]">
             <section className="bg-black text-white">
-                <div className="flex-1">
-                <div className="mt-5">
-                    <h2>Posts</h2>
-                </div>
-                <div className="blog-signout-wrapper">
-                <a className="blog-signout-button" href="/signin">Sign Out</a>
-                </div>
-                </div>
+            <div className="flex-1">
+                <Sidebar />
+            </div>
             </section>
             <section className="flex flex-col h-[90%]">
                 <div className="flex-1">
-                    <h2>Posts</h2>
-                    {filteredPosts && 
-                    filteredPosts.map((showPost)=> 
-                    
-                    <h3 className= "p-5">{showPost.title}</h3>
-                )
-                    }
+                    <h2 className="text-2xl mb-2">{postData?.title}</h2>
+                    <div>
+                        <h2>Metadata</h2>
+                        <p>{postData?.metadata}</p>
+                    </div>
+                    <div className="mb-2">
+                        <h2>Content</h2>
+                        <div dangerouslySetInnerHTML={{__html: postData?.content || ''}} />
+                    </div>
+                    <div>
+                        <h2>Keywords</h2>
+                        <p>{postData?.keywords}</p>
+                    </div>
                     </div>
                     <div>
                     <div className=" bg-gray-700 p-10">
