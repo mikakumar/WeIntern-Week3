@@ -7,9 +7,6 @@ import {getDoc} from "firebase/firestore";
 import { auth, db } from "@/api/firebase-config";
 import {doc} from 'firebase/firestore'; 
 
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-
 
 
 import Sidebar from '@/components/sidebar';

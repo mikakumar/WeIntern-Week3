@@ -7,6 +7,7 @@ import {getDoc} from "firebase/firestore";
 import { auth, db } from "@/api/firebase-config";
 import {doc} from 'firebase/firestore'; 
 
+import {convertSubcurrency} from "@/components/subcurrency";
 
 const PostContext = createContext();
 
@@ -16,6 +17,8 @@ function ContextProvider({children}){
      const [username, setUsername] = useState('');
      const [email, setEmail] = useState('');
      const [password, setPassword] = useState('');
+
+     const [clientSecret, setClientsecret] = useState('');
 
      
      const [loggedIn, setLoggedIn] = useState(false);
@@ -42,7 +45,18 @@ function ContextProvider({children}){
                              setLoggedIn(false);
                          }
                      }
+                     });
+
+
+                     fetch("/api/checkout", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({amount: convertSubcurrency(5.99)}),
                      })
+                     .then((res)=>res.json())
+                     .then((data)=>setClientsecret(data.clientSecret))
                  }, []);
 
     const toggleLogIn = () =>{
@@ -60,7 +74,7 @@ function ContextProvider({children}){
      
 
    return(
-           <PostContext.Provider value={{loggedIn, toggleLogIn, toggleLogOut, premuser, togglePrem, username, email, password}}>
+           <PostContext.Provider value={{loggedIn, toggleLogIn, toggleLogOut, premuser, togglePrem, clientSecret, username, email, password}}>
                {children}
            </PostContext.Provider>
        )
