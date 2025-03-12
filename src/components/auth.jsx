@@ -3,11 +3,31 @@
 import {auth, gAuth, gitAuth, db} from '@/api/firebase-config';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
-import {setDoc, doc} from 'firebase/firestore'; 
+import {getDoc, setDoc, doc} from 'firebase/firestore'; 
 
 
+export const authCheck = async() =>{
+    auth.onAuthStateChanged(async(user)=>{
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()){
+            setLoggedIn(true);
+            localStorage.setItem('loggedIn', true);    
+            const tname = docSnap.data().name;
+            setUsername(tname);
+            localStorage.setItem('username', tname);
+            const temail = docSnap.data().email;
+            setEmail(temail);
+            localStorage.setItem('email', temail);
+        }
+        else{
+            setLoggedIn(false);
+            localStorage.setItem('loggedIn', false);
+        }
+    });
+}
 
-export const signInFunC = async() =>{
+export const signInFunC = async(email, password) =>{
         try{
             await signInWithEmailAndPassword(auth, email, password)
             console.log('User logged in successfully!');

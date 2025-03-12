@@ -13,7 +13,21 @@ import { signOutFunC } from "./auth";
 
 const Sidebar = () =>{
 
-    const {username, toggleLogOut} = useContext(PostContext);
+
+    const [username, setUsername] = useState('');
+    const {toggleLogOut} = useContext(PostContext);
+
+    useEffect(()=>{
+        auth.onAuthStateChanged(async(user)=>{
+            if(user){
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+            if(docSnap.exists()){
+                setUsername(docSnap.data().name);
+            }
+        }
+        })
+    }, []);
 
     const router = useRouter();
         
@@ -22,6 +36,7 @@ const Sidebar = () =>{
         toggleLogOut();
         router.push('/signin');
     }
+
 
     return (
         <>        

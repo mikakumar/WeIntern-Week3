@@ -17,7 +17,7 @@ import { PostContext } from "@/Context";
 
 const SignIn = () =>{
 
-    const {toggleLogIn} = useContext(PostContext)
+    const {saveDetails, toggleLogIn} = useContext(PostContext)
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,7 +31,7 @@ const SignIn = () =>{
 
    
     const dragIn = () =>{
-        signInFunC();
+        signInFunC(email, password);
         router.push('/user');
         toggleLogIn();  
     }

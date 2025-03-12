@@ -3,7 +3,7 @@ import {db } from "@/api/firebase-config";
 import { collection, doc, getDoc, getDocs} from "firebase/firestore";
 
 import { signOutFunC } from "@/components/auth";
-import { getPosts, handleCompletion } from "@/actions";
+import { handleCompletion } from "../../../actions/index";
 
 
 import Sidebar from '@/components/sidebar';

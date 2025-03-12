@@ -15,7 +15,6 @@ const User = () =>{
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     useEffect(()=>{
                 auth.onAuthStateChanged(async(user)=>{
@@ -25,7 +24,6 @@ const User = () =>{
                     if(docSnap.exists()){
                         setUsername(docSnap.data().name);
                         setEmail(docSnap.data().email);
-                        setPassword(docSnap.data().password);
 
                     }
                 }

@@ -8,15 +8,11 @@ import { auth, db } from "@/api/firebase-config";
 import {doc} from 'firebase/firestore'; 
 
 import {convertSubcurrency} from "@/components/subcurrency";
+import { authCheck } from "./components/auth";
 
 const PostContext = createContext();
 
 function ContextProvider({children}){
-
-
-     const [username, setUsername] = useState('');
-     const [email, setEmail] = useState('');
-     const [password, setPassword] = useState('');
 
      const [clientSecret, setClientsecret] = useState('');
 
@@ -25,27 +21,31 @@ function ContextProvider({children}){
      const [premuser, setPremuser] = useState(false);
 
           useEffect(()=>{
+
+            authCheck();
+
+            const tlogin = localStorage.getItem('loggedIn', loggedIn);
+            if(tlogin == null){
+                setLoggedIn(false);
+                localStorage.setItem('loggedIn', 'false');
+            }
+            else if(tlogin == true){
+                setLoggedIn(true);
+                const tname = localStorage.getItem('username', username);
+                    setUsername(tname);
+                    const temail = localStorage.getItem('email', email);
+                    setEmail(temail);
+            } 
+            
+            else{
+                setLoggedIn(false);
+                localStorage.setItem('loggedIn', false);
+            }
             if(loggedIn == null){
                 setLoggedIn(false);
+                localStorage.setItem('loggedIn', false);
             }
-                     auth.onAuthStateChanged(async(user)=>{
-                         if(user==null){
-                             setLoggedIn(false);
-                         }
-                         else{
-                         const docRef = doc(db, "users", user.uid);
-                         const docSnap = await getDoc(docRef);
-                         if(docSnap.exists()){
-                             setLoggedIn(true);
-                             setUsername(docSnap.data().name);
-                             setEmail(docSnap.data().email);
-                             setPassword(docSnap.data().password);
-                         }
-                         else{
-                             setLoggedIn(false);
-                         }
-                     }
-                     });
+                     
 
 
                      fetch("/api/checkout", {
@@ -61,10 +61,12 @@ function ContextProvider({children}){
 
     const toggleLogIn = () =>{
         setLoggedIn(true);
+        localStorage.setItem('loggedIn', true);
     }
 
     const toggleLogOut = () =>{
         setLoggedIn(false);
+        localStorage.setItem('loggedIn', false);
     }
 
      const togglePrem = () => {
@@ -74,7 +76,7 @@ function ContextProvider({children}){
      
 
    return(
-           <PostContext.Provider value={{loggedIn, toggleLogIn, toggleLogOut, premuser, togglePrem, clientSecret, username, email, password}}>
+           <PostContext.Provider value={{loggedIn, toggleLogIn, toggleLogOut, premuser, togglePrem, clientSecret}}>
                {children}
            </PostContext.Provider>
        )

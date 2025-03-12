@@ -1,6 +1,6 @@
 'use server'
 import { db } from "@/api/firebase-config";
-import { addDoc, collection, getDocs, query, orderBy, limit} from "firebase/firestore";
+import { addDoc, collection, getDocs} from "firebase/firestore";
 import OpenAI from "openai";
 
 
