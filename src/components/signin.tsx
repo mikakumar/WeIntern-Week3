@@ -17,7 +17,7 @@ import { PostContext } from "@/Context";
 
 const SignIn = () =>{
 
-    const {saveDetails, toggleLogIn} = useContext(PostContext)
+    const {toggleLogIn} = useContext(PostContext)
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

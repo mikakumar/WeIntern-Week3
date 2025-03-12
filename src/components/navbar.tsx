@@ -13,7 +13,7 @@ import { PostContext } from "@/Context";
 
 const Navbar = () =>{
 
-    const {loggedIn} = useContext(PostContext);
+    const {loggedIn, toggleLogOut} = useContext(PostContext);
 
     const router = useRouter();
 
@@ -22,6 +22,7 @@ const Navbar = () =>{
             const kickOut = () =>{
                 signOutFunC();
                 router.push('/signin');
+                toggleLogOut();
             }
 
     if(loggedIn){

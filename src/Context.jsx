@@ -1,14 +1,9 @@
 "use client";
 
 import {createContext, useState, useEffect} from "react";
-
-import {getDoc} from "firebase/firestore";
-
-import { auth, db } from "@/api/firebase-config";
-import {doc} from 'firebase/firestore'; 
-
 import {convertSubcurrency} from "@/components/subcurrency";
-import { authCheck } from "./components/auth";
+
+const tlogin = localStorage.getItem('loggedIn');
 
 const PostContext = createContext();
 
@@ -17,36 +12,25 @@ function ContextProvider({children}){
      const [clientSecret, setClientsecret] = useState('');
 
      
-     const [loggedIn, setLoggedIn] = useState(false);
+     const [loggedIn, setLoggedIn] = useState();
      const [premuser, setPremuser] = useState(false);
 
           useEffect(()=>{
 
-            authCheck();
-
-            const tlogin = localStorage.getItem('loggedIn', loggedIn);
-            if(tlogin == null){
-                setLoggedIn(false);
-                localStorage.setItem('loggedIn', 'false');
-            }
-            else if(tlogin == true){
-                setLoggedIn(true);
-                const tname = localStorage.getItem('username', username);
-                    setUsername(tname);
-                    const temail = localStorage.getItem('email', email);
-                    setEmail(temail);
-            } 
+            setLoggedIn(tlogin);
             
-            else{
-                setLoggedIn(false);
-                localStorage.setItem('loggedIn', false);
-            }
-            if(loggedIn == null){
-                setLoggedIn(false);
-                localStorage.setItem('loggedIn', false);
-            }
-                     
-
+                if(loggedIn){
+                
+                if(tlogin == true){
+                    setLoggedIn(true);
+                    localStorage.setItem('loggedIn', loggedIn);
+                } 
+                
+                else{
+                    setLoggedIn(false);
+                    localStorage.setItem('loggedIn', loggedIn);
+                }
+            } 
 
                      fetch("/api/checkout", {
                         method: "POST",
