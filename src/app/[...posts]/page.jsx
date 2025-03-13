@@ -2,7 +2,6 @@
 import {db } from "@/api/firebase-config";
 import { collection, doc, getDoc, getDocs} from "firebase/firestore";
 
-import { signOutFunC } from "@/components/auth";
 import { handleCompletion } from "../../../actions/index";
 
 
@@ -22,25 +21,25 @@ export default async function Post(){
     
     return(
         <>
-        <div className="grid h-screen grid-cols-[.2fr_1fr]">
-            <section className="bg-black text-white">
+        <div className="main-layout">
+            <section className="sidebar">
             <div className="flex-1">
                 <Sidebar />
             </div>
             </section>
-            <section className="flex flex-col h-[90%]">
+            <section className="user-bg">
                 <div className="flex-1">
                     <h2 className="text-2xl mb-2">{postData?.title}</h2>
                     <div>
-                        <h2>Metadata</h2>
+                        <h2>Metadata: </h2>
                         <p>{postData?.metadata}</p>
                     </div>
                     <div className="mb-2">
-                        <h2>Content</h2>
+                        <h2>Content: </h2>
                         <div dangerouslySetInnerHTML={{__html: postData?.content || ''}} />
                     </div>
                     <div>
-                        <h2>Keywords</h2>
+                        <h2>Keywords: </h2>
                         <p>{postData?.keywords}</p>
                     </div>
                     </div>

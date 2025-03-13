@@ -1,6 +1,7 @@
 'use client';
 
 import {useState, useEffect} from "react";
+import { useRouter } from "next/navigation";
 
 import {getDoc} from "firebase/firestore";
 
@@ -16,6 +17,8 @@ const User = () =>{
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
 
+    const router = useRouter();
+
     useEffect(()=>{
                 auth.onAuthStateChanged(async(user)=>{
                     if(user){
@@ -30,27 +33,32 @@ const User = () =>{
                 })
             }, []);
 
-   
-
+    const premPush = () =>{
+        router.push('/checkout')
+    }
     
 
     return(
         <>
-        <div className="grid h-screen grid-cols-[.2fr_1fr]">
-            <section className="bg-black text-white">
+        <div className="main-layout">
+            <section className="sidebar">
             <div className="flex-1">
                 <Sidebar />
             </div>
             </section>
-            <section className="flex flex-col h-[90%]">
-                <div className="bg-black text-white h-[70vh] w-[50vw] mx-30 my-10">
+            <section>
+                <div className="user-cont">
 
-                    <h1 className="text-center text-2xl mt-10 mb-20">User Details</h1>
-                    <div className="mx-10">
+                    <h1 className="user-details">User Details</h1>
+                    <div className="mx-10 mb-10">
                     <h2>Username: {username}</h2>
                     <h2>Email: {email}</h2>
                     <h2>Password: xx-xxxxxxxxx</h2>
-                    <a href="">Upgrade to Premium</a>
+                    </div>
+
+                    <div className="prem-wrapper">
+                    <button className="prem-link" onClick={premPush}>Upgrade to Premium</button>
+                    
                     </div>
                    
                 </div>

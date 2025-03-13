@@ -158,6 +158,19 @@
     background: #042235;
   }
 
+  
+  .main-layout{
+    @apply grid h-screen grid-cols-[.2fr_1fr]
+  }
+
+  .sidebar{
+    @apply bg-black text-white
+  }
+
+  .user-bg{
+    @apply flex flex-col h-[90%] bg-black text-white
+  }
+
   .prompt-submit-button{
     @apply bg-white  text-black h-[7vh] w-[9vw] px-4 py-2 relative rounded-md cursor-pointer;
   }
@@ -177,6 +190,36 @@
     @apply h-[7vh] w-[9vw] inline-block rounded-md;
     background: #042235;
   }
+
+  .user-cont{
+    @apply bg-black text-white h-[70vh] w-[50vw] mx-30 my-10
+  }
+
+  .user-details{
+    @apply text-center text-2xl mt-10 mb-20 pt-10
+  }
+
+  .prem-link{
+    @apply bg-white text-black cursor-pointer h-[7vh] w-[15vw] py-2 relative rounded-md whitespace-nowrap;
+  }
+
+
+  .prem-link:hover{
+    @apply h-[7vh] w-[15vw] px-4 py-2 relative rounded-md cursor-pointer;
+    background-image: linear-gradient(to right, #09e2f6,#0990f9, #ff4f7f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+  }
+
+  .prem-wrapper{
+    @apply mx-10 h-[7vh] w-[15vw] inline-block rounded-md bg-white 
+  }
+
+  .prem-wrapper:hover{
+    @apply h-[7vh] w-[15vw] inline-block rounded-md;
+    background: #042235;
+  }
+
 
 }
 
