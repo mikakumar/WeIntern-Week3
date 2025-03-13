@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
+import { FaEyeLowVision } from "react-icons/fa6";
 
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -24,10 +25,29 @@ const SignIn = () =>{
 
     const [emailFlip, setEmailFlip] = useState(false);
     const [keyFlip, setKeyFlip] = useState(false);
-    const [noClickPasswordVisible, setNoClickPasswordVisible] = useState(false);
-    const [clickedPasswordVisible, setClickedPasswordVisible] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     const router = useRouter();
+
+    const emailBlack = () =>{
+        setEmailFlip(false);
+    }
+
+    const emailWhite = () =>{
+        setEmailFlip(true);
+    }
+
+    const keyBlack = () =>{
+        setKeyFlip(false);
+    }
+
+    const keyWhite = () =>{
+        setKeyFlip(true);
+    }
+
+    const passwordCheck = () =>{
+        setPasswordVisible(!passwordVisible);
+    }
 
    
     const dragIn = () =>{
@@ -36,27 +56,55 @@ const SignIn = () =>{
         toggleLogIn();  
     }
 
-
     
     return(
         <>
         <div className="signin-container">
             <form action={dragIn}>
             <div>
-            <MdAlternateEmail className="input-icon"/>
-            <input type="email" placeholder="Email"
+            {emailFlip && <div>
+                <MdAlternateEmail className="input-icon text-white"/>
+            </div> }
+           {!emailFlip && <div>
+            <MdAlternateEmail className="input-icon text-black"/>
+            </div>}
+            <input type="email" placeholder="Email" onFocus={emailBlack} onBlur={emailWhite}
             className="input-box"
             
             onChange={(e)=>setEmail(e.target.value)}
              />
              </div>
              <div>
-             <FaKey className="input-icon" />
-            <input type="password" placeholder="Password"
-            className="input-box"
+            {keyFlip &&    
+            <div>
+             <FaKey className="input-icon text-white" />
+             </div>
+            }
+             {!keyFlip &&    
+            <div>
+             <FaKey className="input-icon text-black" />
+             </div>
+            }
+            <input type={passwordVisible ? "text" : "password"} placeholder="Password"
+            className="input-box text-white focus:text-black" onFocus={keyBlack} onBlur={keyWhite}
             onChange={(e)=>setPassword(e.target.value)}
             />
-            <FaEye className="password-check" />
+            {!passwordVisible && <div className="password-check">
+                {keyFlip && <div>
+                <FaEye className="text-white" onClick={passwordCheck} />
+                </div>}
+                {!keyFlip && <div>
+                <FaEye className="text-black" onClick={passwordCheck} />
+                </div>}
+                </div>}
+                {passwordVisible && <div className="password-check">
+                {keyFlip && <div>
+                <FaEyeLowVision className="text-white" onClick={passwordCheck} />
+                </div>}
+                {!keyFlip && <div>
+                <FaEyeLowVision className="text-black" onClick={passwordCheck} />
+                </div>}
+                </div>}
             </div>
             <div className="button-wrapper mt-2">
                 <input type="submit" className="auth-submit" value="Sign In" />
